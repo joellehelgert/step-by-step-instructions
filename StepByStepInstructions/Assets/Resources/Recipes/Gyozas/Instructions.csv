@@ -1,0 +1,35 @@
+﻿Number;Description;Type;Hint;Timer
+1.0;Preparing the dough;0;;
+1.1;Add flour, starch and salt to a big bowl;1;;
+1.2;Blend oil and water;1;;
+1.3;Slowly add liquig to the bowl;1;;
+1.4;kneat the dough till it is mingled and soft;1;;
+1.5;wrap it and let it rest in a cool place for at least 30 minutes;2;;30
+2.0;Preparing the filling;0;;
+2.1;cube onions;3;;
+2.2;shred carrots;1;;
+2.3;cut leek;1;For easy cleaning halve sleek lenthways and rinse the inner layers;
+2.4;cut cabbage into small chunks;1;;
+2.5;peal garlic and mince or squeeze it;1;;
+2.6;Put the soya granule in a heat resistent bowl and pour it with vegetable stock or hot water;1;;
+2.7;Add cumin and bell pepper seasoning;1;;
+2.8;let rest for about 10 minutes or as the packaging describes;2;;10
+3.0;Heat up the pan!;0;;
+3.1;Put a pan on medium heat and add a bit oil to it;1;;
+3.2 ;add garlic and onions to the pan and braise it lightly;1;;
+3.3;Add leek and carrots and wait for another 3 to 5 minutes;2;;3
+3.4;Add the soya granule to the pan and let it simmer for 5 minutes;2;;5
+3.5;Then add the cabbage and after two minutes remove the pan from the heat and let the filling cool down;1;;
+4.0;Shaping the Gyozas;0;;
+4.1;Roll the dough out until it is 2-3mm thick;1;;
+4.2;Cut out circles;4;;
+4.3;Add a table spoon of filling to each circle;1;;
+4.4;Fold the gyoza (TODO);1;;
+5.0;Heat up the pan!;1;;
+5.1;Add oil to a big pan and bring it to medium heat;1;;
+5.2;Put the gyozas with the flat side in the pan and let it crisp for 5 minutes;2;;5
+5.3;Now add water to the pan so that 1cm is covered (use less if the pan is not completely filled with gyozas);1;;
+5.4;Cover it with the lid and let them cook for 10 to 15 minutes;2;;10
+6.0;Let's dip it hon';0;You can skip this skip and only use sweet soure sauce;
+6.1;Add soy sauce, rice vinegar, agave syrup, sesame oil and the sriracha (samba oelek) to a small bowl and give it a mix;1;;
+7.0;Great Job! Now enjoy your Gyozas with the sauces;0;;
