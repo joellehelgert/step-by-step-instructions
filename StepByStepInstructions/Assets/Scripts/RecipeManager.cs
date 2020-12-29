@@ -52,13 +52,12 @@ public class RecipeManager : MonoBehaviour
         {
             string[] row = dataRows[i].Split(new char[] { ';' });
             StepType type = (StepType)Enum.Parse(typeof(StepType), row[2]);
-            int? seconds = float.TryParse(row[4], out float f) ? (int?)f : null;
+            int? seconds = float.TryParse(row[4], out float f) ? (int?)f * 60 : null;
             Step step = new Step(float.Parse(row[0]), row[1], type, row[3], seconds);
             recipe.Instructions.Add(step);
 
         }
 
-        Debug.Log("START");
         UI.EnableStart(recipe.Instructions);
     }
 }

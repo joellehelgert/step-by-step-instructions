@@ -14,12 +14,15 @@ public class UIInteractables : MonoBehaviour
     public GameObject Step;
     public TextMeshProUGUI StepField;
     public Button NextStepButton;
+    public TextMeshProUGUI TimerField;
 
     public GameObject HeadlinePrefab;
 
     private List<Step> Instructions;
     private IEnumerator<Step> StepEnumerator;
+    private float timer;
     private bool UpdateUI;
+    private bool TimerSet = false;
 
     private void Start()
     {
@@ -28,14 +31,13 @@ public class UIInteractables : MonoBehaviour
         // StartButton.interactable = false;
         // fill ingredients in textfield
         // hide textfield & close
+        TimerField.enabled = false;
     }
 
     private void Update()
     {
         if(UpdateUI && StepEnumerator.Current != null)
         {
-            // check type of instruction
-            // paint
             switch(StepEnumerator.Current.Type)
             {
                 case StepType.Onions:
@@ -44,6 +46,10 @@ public class UIInteractables : MonoBehaviour
                     StepField.text = "HEADING";
                     break;
                 case StepType.Timer:
+                    timer = (float)StepEnumerator.Current.TimerInS;
+                    TimerField.enabled = true;
+                    TimerSet = true;
+                    StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Circles:
                     break;
@@ -54,11 +60,27 @@ public class UIInteractables : MonoBehaviour
             }
 
             UpdateUI= false;
+
         } else if (UpdateUI && StepEnumerator.Current == null)
         {
             StepField.text = "DONE";
             UpdateUI = false;
             NextStepButton.interactable = false;
+        }
+
+        if(TimerSet)
+        {
+            if (timer <= 0) {
+                TimerSet = false;
+                TimerField.enabled = false;
+            } else
+            {
+                timer -= Time.deltaTime;
+                int minutes = (int)timer / 60;
+                int sec = (int)timer - minutes * 60;
+                TimerField.text = minutes + ":" + sec;
+            }
+
         }
     }
 
@@ -66,28 +88,26 @@ public class UIInteractables : MonoBehaviour
     public void CloseIngredients() => Ingredients.SetActive(false);
 
     public void PaintIngredients(List<Ingredient> ingredients)
-    {
-        /*
-        Debug.Log(GameObject.Find("Dough"));
-        GameObject.Find("Dough").TryGetComponent<TextMeshPro>(out TextMeshPro Dough);
-        Ingredients.GetComponent("Filling").TryGetComponent<TextMeshPro>(out TextMeshPro Filling);
-        Ingredients.GetComponent("Sauce").TryGetComponent<TextMeshPro>(out TextMeshPro Sauce);
-        */
-        
+    {        
         foreach (Ingredient ingredient in ingredients) {
             switch (ingredient.Part)
             {
                 case "Dough":
-                    Dough.text = Dough.text + ingredient.Name + "\n";
+                    Dough.text = Dough.text + PrintIngredient(ingredient);
                     break;
                 case "Filling":
-                    Filling.text = Filling.text + ingredient.Name + "\n";
+                    Filling.text = Filling.text + PrintIngredient(ingredient);
                     break;
                 case "Sauce":
-                    Sauce.text = Sauce.text + ingredient.Name + "\n";
+                    Sauce.text = Sauce.text + PrintIngredient(ingredient);
                     break;
             }
         }
+    }
+
+    private string PrintIngredient(Ingredient ingredient)
+    {
+        return ingredient.Amount + "  " + ingredient.Unit + "  " + ingredient.Name + "\n";
     }
 
     public void EnableStart(List<Step> instructions) {
