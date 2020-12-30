@@ -15,6 +15,7 @@ public class UIInteractables : MonoBehaviour
     public TextMeshProUGUI StepField;
     public Button NextStepButton;
     public TextMeshProUGUI TimerField;
+    public CutOnions Onions;
 
     public GameObject HeadlinePrefab;
 
@@ -38,9 +39,11 @@ public class UIInteractables : MonoBehaviour
     {
         if(UpdateUI && StepEnumerator.Current != null)
         {
-            switch(StepEnumerator.Current.Type)
+            switch (StepEnumerator.Current.Type)
             {
                 case StepType.Onions:
+                    Onions.StartOnionCutting();
+                    StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Heading:
                     StepField.text = "HEADING";
