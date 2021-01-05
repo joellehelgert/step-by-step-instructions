@@ -6,57 +6,65 @@ using Vuforia;
 
 public class CutOnions : MonoBehaviour, IVirtualButtonEventHandler
 {
-    public GameObject HintText;
+    public TextMeshPro HintText;
     public GameObject PlacingArea;
-    private int phase = 0;
+    public GameObject HorizontalGrid;
+    public GameObject VerticalGrid;
+    public GameObject CutOnion;
+    private bool cutting;
 
     // Start is called before the first frame update
     void Start()
     {
         PlacingArea.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
-        HintText.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (phase)
-        {
-            case 1:
-                HintText.SetActive(true);
-                Debug.Log("Case 1");
-                break;
-            case 2:
-                Debug.Log("Case 2");
-                // HintText.SetActive(false);
-                HintText.GetComponentInChildren<TextMeshPro>().text = "phase 2";
-                break;
-            case 3:
-                Debug.Log("Case 3");
-                HintText.GetComponentInChildren<TextMeshPro>().text = "phase 3";
-                break;
-            default:
-                break;
-        }
     }
 
-    public void StartOnionCutting() => phase = 1;
+    public void StartOnionCutting()
+    {
+        CutOnion.SetActive(true);
+        cutting = true;
+    }
 
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
-        HintText.SetActive(false);
-        phase++;
-        WaitAndSetPhase3(2);
+
     }
 
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
+        if(cutting)
+        {
+            Animator[] hanimators = HorizontalGrid.GetComponentsInChildren<Animator>();
+            Animator[] vanimators = VerticalGrid.GetComponentsInChildren<Animator>();
+            StartCoroutine(DrawLines(hanimators,vanimators));
+        }
 
     }
 
-    IEnumerator WaitAndSetPhase3(float waitTime)
+    IEnumerator DrawLines(Animator[] hanimators, Animator[] vanimators)
     {
-        yield return new WaitForSeconds(waitTime);
-        phase = 3;
+        HintText.text = "2. Cut the onion horizontally as shown by the lines";
+        foreach (Animator anim in hanimators)
+        {
+            yield return new WaitForSeconds(1);
+            anim.Play("line_anim");
+        }
+
+        HintText.text = "3. Now, cut the onion vertically as shown by the lines";
+        foreach (Animator anim in vanimators)
+        {
+            yield return new WaitForSeconds(1);
+            anim.Play("line_anim");
+        }
+
+        yield return new WaitForSeconds(5);
+
+        CutOnion.SetActive(false);
+        cutting = false;
     }
 }

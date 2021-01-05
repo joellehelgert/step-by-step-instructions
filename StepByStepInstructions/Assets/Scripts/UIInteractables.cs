@@ -17,8 +17,6 @@ public class UIInteractables : MonoBehaviour
     public TextMeshProUGUI TimerField;
     public CutOnions Onions;
 
-    public GameObject HeadlinePrefab;
-
     private List<Step> Instructions;
     private IEnumerator<Step> StepEnumerator;
     private float timer;
@@ -46,7 +44,7 @@ public class UIInteractables : MonoBehaviour
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Heading:
-                    StepField.text = "HEADING";
+                    StepField.text = StepEnumerator.Current.Description;
                     break;
                 case StepType.Timer:
                     timer = (float)StepEnumerator.Current.TimerInS;
@@ -87,7 +85,7 @@ public class UIInteractables : MonoBehaviour
         }
     }
 
-    public void OpenIngredients() => Ingredients.SetActive(true);
+    public void OpenIngredients() => Ingredients.SetActive(!Ingredients.active);
     public void CloseIngredients() => Ingredients.SetActive(false);
 
     public void PaintIngredients(List<Ingredient> ingredients)

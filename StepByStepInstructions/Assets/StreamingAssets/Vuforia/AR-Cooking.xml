@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="Schneidebrett" size="30.000000 21.108435" />
-    <ImageTarget name="Ingredients" size="2.000000 2.000000" />
-    <ImageTarget name="Next" size="2.000000 2.000000" />
+    <ImageTarget name="Schneidebrett" size="0.290000 0.204048" />
+    <ImageTarget name="next" size="0.045000 0.045000" />
+    <ImageTarget name="Ingredients" size="0.045000 0.045000" />
     <ImageTarget name="veganGyozas" size="0.500000 0.500000" />
   </Tracking>
 </QCARConfig>

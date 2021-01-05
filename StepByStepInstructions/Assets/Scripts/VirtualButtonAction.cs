@@ -23,12 +23,13 @@ public class VirtualButtonAction : MonoBehaviour, IVirtualButtonEventHandler
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
         Debug.Log("Button pressed");
+        Debug.Log("-------------" + vb.gameObject);
         if (vb.gameObject == NextButton)
         {
-            NextAnimator.Play("buttonPressed");
+            NextAnimator.Play("button_down");
         }
         else {
-            IngredientAnimator.Play("buttonPressed");
+            IngredientAnimator.Play("button_down");
         }
     }
 
@@ -37,12 +38,12 @@ public class VirtualButtonAction : MonoBehaviour, IVirtualButtonEventHandler
         if (vb.gameObject == NextButton)
         {
             UIManager.NextStep();
-            NextAnimator.Play("buttonReleased");
+            NextAnimator.Play("button_up");
         }
         else
         {
             UIManager.OpenIngredients();
-            IngredientAnimator.Play("buttonReleased");
+            IngredientAnimator.Play("button_up");
         }
         Debug.Log("Button released");
     }
