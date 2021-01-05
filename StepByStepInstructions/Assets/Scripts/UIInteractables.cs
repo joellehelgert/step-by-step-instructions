@@ -16,6 +16,7 @@ public class UIInteractables : MonoBehaviour
     public Button NextStepButton;
     public TextMeshProUGUI TimerField;
     public CutOnions Onions;
+    public CutOuts CutOuts;
 
     private List<Step> Instructions;
     private IEnumerator<Step> StepEnumerator;
@@ -53,6 +54,8 @@ public class UIInteractables : MonoBehaviour
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Circles:
+                    StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
+                    CutOuts.StartCutOuts();
                     break;
                 case StepType.BasicStep:
                 default:
