@@ -22,8 +22,6 @@ public class VirtualButtonAction : MonoBehaviour, IVirtualButtonEventHandler
 
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
-        Debug.Log("Button pressed");
-        Debug.Log("-------------" + vb.gameObject);
         if (vb.gameObject == NextButton)
         {
             NextAnimator.Play("button_down");
@@ -35,6 +33,7 @@ public class VirtualButtonAction : MonoBehaviour, IVirtualButtonEventHandler
 
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
+
         if (vb.gameObject == NextButton)
         {
             UIManager.NextStep();
@@ -42,9 +41,8 @@ public class VirtualButtonAction : MonoBehaviour, IVirtualButtonEventHandler
         }
         else
         {
-            UIManager.OpenIngredients();
+            UIManager.ToggleIngredients();
             IngredientAnimator.Play("button_up");
         }
-        Debug.Log("Button released");
     }
 }

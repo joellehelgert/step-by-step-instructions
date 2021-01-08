@@ -5,7 +5,6 @@ using TMPro;
 using Vuforia;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Vuforia.TargetFinder;
 
 public class ScanRecipeCode : MonoBehaviour
 {
@@ -22,8 +21,6 @@ public class ScanRecipeCode : MonoBehaviour
     [Header("Recipe Target")]
     public TrackableBehaviour recipe;
 
-    private IEnumerable<TargetSearchResult> FoundTargets;
-
     void Start()
     {
         status.text = IdleText;
@@ -32,7 +29,6 @@ public class ScanRecipeCode : MonoBehaviour
 
     void Update()
     {
-        // TODO more genereic -> find all found images and check which recipe it should be and link the correct one.
         if(recipe.CurrentStatus == TrackableBehaviour.Status.DETECTED || recipe.CurrentStatus == TrackableBehaviour.Status.TRACKED)
         {
             status.text = SuccessText + " vegan Gyozas";
@@ -44,7 +40,7 @@ public class ScanRecipeCode : MonoBehaviour
 
     public void ChangeScene ()
     {
-        SceneManager.LoadScene("Instructions");
+        SceneManager.LoadScene("Gyozas");
     }
 
     

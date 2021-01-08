@@ -10,11 +10,19 @@ public class UIInteractables : MonoBehaviour
     public TextMeshProUGUI Dough;
     public TextMeshProUGUI Filling;
     public TextMeshProUGUI Sauce;
-    public Button StartButton;
+
+    public GameObject Header;
+    public TextMeshProUGUI HeaderField;
+
     public GameObject Step;
     public TextMeshProUGUI StepField;
-    public Button NextStepButton;
+
     public TextMeshProUGUI TimerField;
+    
+    public Button StartButton;
+    public Button NextStepButton;
+    public Button IngredientsButton;
+
     public CutOnions Onions;
     public CutOuts CutOuts;
 
@@ -28,9 +36,6 @@ public class UIInteractables : MonoBehaviour
     {
         Ingredients.SetActive(false);
         UpdateUI = false;
-        // StartButton.interactable = false;
-        // fill ingredients in textfield
-        // hide textfield & close
         TimerField.enabled = false;
     }
 
@@ -41,24 +46,34 @@ public class UIInteractables : MonoBehaviour
             switch (StepEnumerator.Current.Type)
             {
                 case StepType.Onions:
+                    Header.SetActive(false);
+                    Step.SetActive(true);
                     Onions.StartOnionCutting();
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Heading:
-                    StepField.text = StepEnumerator.Current.Description;
+                    Header.SetActive(true);
+                    Step.SetActive(false);
+                    HeaderField.text = StepEnumerator.Current.Number.Substring(0,1)+ ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Timer:
+                    Header.SetActive(false);
+                    Step.SetActive(true);
                     timer = (float)StepEnumerator.Current.TimerInS;
                     TimerField.enabled = true;
                     TimerSet = true;
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
                 case StepType.Circles:
+                    Header.SetActive(false);
+                    Step.SetActive(true);
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     CutOuts.StartCutOuts();
                     break;
                 case StepType.BasicStep:
                 default:
+                    Header.SetActive(false);
+                    Step.SetActive(true);
                     StepField.text = StepEnumerator.Current.Number + ". " +StepEnumerator.Current.Description;
                     break;
             }
@@ -88,8 +103,30 @@ public class UIInteractables : MonoBehaviour
         }
     }
 
-    public void OpenIngredients() => Ingredients.SetActive(!Ingredients.active);
-    public void CloseIngredients() => Ingredients.SetActive(false);
+    public void ToggleIngredients()
+    {
+        if(Ingredients.activeSelf)
+        {
+            CloseIngredients();
+        } else
+        {
+            OpenIngredients();
+        }
+    }
+    public void OpenIngredients()
+    {
+        Ingredients.SetActive(true);
+        Step.SetActive(false);
+        Header.SetActive(false);
+        NextStepButton.gameObject.SetActive(false);
+    }
+    public void CloseIngredients()
+    {
+        Ingredients.SetActive(false);
+        Step.SetActive(true);
+        Header.SetActive(true);
+        NextStepButton.gameObject.SetActive(true);
+    }
 
     public void PaintIngredients(List<Ingredient> ingredients)
     {        
@@ -125,6 +162,9 @@ public class UIInteractables : MonoBehaviour
         StepEnumerator = Instructions.GetEnumerator();
         StepEnumerator.MoveNext();
         UpdateUI = true;
+        Step.SetActive(true);
+        NextStepButton.gameObject.SetActive(true);
+        IngredientsButton.gameObject.SetActive(true);
     }
 
     public void NextStep()

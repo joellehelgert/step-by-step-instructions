@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Instructions.unity
     guid: a36c9fdc446bd154e81345896d8a7ee7
+  - enabled: 1
+    path: Assets/Scenes/Gyozas.unity
+    guid: 7b1b36bb526024a4d9c07c8b14b1869e
   m_configObjects: {}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Step 
 {
-    public float Number { get; }
+    public string Number { get; }
     public string Description { get;  }
 
     public StepType Type { get; }
@@ -13,7 +13,7 @@ public class Step
 
     public int? TimerInS;
 
-    public Step(float num, string desc, StepType type, string hint, int? seconds)
+    public Step(string num, string desc, StepType type, string hint, int? seconds)
     {
         Number = num;
         Description = desc;
