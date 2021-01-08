@@ -6,23 +6,29 @@ using UnityEngine.UI;
 
 public class UIInteractables : MonoBehaviour
 {
+    [Header("Ingredients")]
     public GameObject Ingredients;
     public TextMeshProUGUI Dough;
     public TextMeshProUGUI Filling;
     public TextMeshProUGUI Sauce;
 
+    [Header("UI Elements for Instruction")]
     public GameObject Header;
     public TextMeshProUGUI HeaderField;
 
     public GameObject Step;
     public TextMeshProUGUI StepField;
 
+    public GameObject Timer;
     public TextMeshProUGUI TimerField;
-    
+    public AudioSource TimeIsUp;
+
+    [Header("UI Buttons (used as Fallback)")]
     public Button StartButton;
     public Button NextStepButton;
     public Button IngredientsButton;
 
+    [Header("Special Interaction Items")]
     public CutOnions Onions;
     public CutOuts CutOuts;
 
@@ -36,7 +42,7 @@ public class UIInteractables : MonoBehaviour
     {
         Ingredients.SetActive(false);
         UpdateUI = false;
-        TimerField.enabled = false;
+        Timer.SetActive(false);
     }
 
     private void Update()
@@ -60,7 +66,7 @@ public class UIInteractables : MonoBehaviour
                     Header.SetActive(false);
                     Step.SetActive(true);
                     timer = (float)StepEnumerator.Current.TimerInS;
-                    TimerField.enabled = true;
+                    Timer.SetActive(true);
                     TimerSet = true;
                     StepField.text = StepEnumerator.Current.Number + ". " + StepEnumerator.Current.Description;
                     break;
@@ -82,7 +88,7 @@ public class UIInteractables : MonoBehaviour
 
         } else if (UpdateUI && StepEnumerator.Current == null)
         {
-            StepField.text = "DONE";
+            HeaderField.text = "DONE! Enjoy your meal";
             UpdateUI = false;
             NextStepButton.interactable = false;
         }
@@ -90,14 +96,16 @@ public class UIInteractables : MonoBehaviour
         if(TimerSet)
         {
             if (timer <= 0) {
+                TimeIsUp.Play();
                 TimerSet = false;
-                TimerField.enabled = false;
+                StartCoroutine(KeepTimer());
             } else
             {
                 timer -= Time.deltaTime;
                 int minutes = (int)timer / 60;
                 int sec = (int)timer - minutes * 60;
-                TimerField.text = minutes + ":" + sec;
+                string secText = sec < 10 ? "0" + sec : "" + sec;
+                TimerField.text = minutes + ":" + secText;
             }
 
         }
@@ -115,7 +123,7 @@ public class UIInteractables : MonoBehaviour
     }
     public void OpenIngredients()
     {
-        Ingredients.SetActive(true);
+        Ingredients.SetActive(true);    
         Step.SetActive(false);
         Header.SetActive(false);
         NextStepButton.gameObject.SetActive(false);
@@ -123,8 +131,14 @@ public class UIInteractables : MonoBehaviour
     public void CloseIngredients()
     {
         Ingredients.SetActive(false);
-        Step.SetActive(true);
-        Header.SetActive(true);
+        if (StepEnumerator.Current.Type == StepType.Heading)
+        {
+            Header.SetActive(true);
+        } else
+        {
+
+            Step.SetActive(true);
+        }
         NextStepButton.gameObject.SetActive(true);
     }
 
@@ -171,5 +185,11 @@ public class UIInteractables : MonoBehaviour
     {
         UpdateUI = true;
         StepEnumerator.MoveNext();
+    }
+
+    private IEnumerator KeepTimer()
+    {
+        yield return new WaitForSeconds(4);
+        Timer.SetActive(false);
     }
 }
