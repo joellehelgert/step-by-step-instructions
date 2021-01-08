@@ -51,7 +51,7 @@ public class CutOnions : MonoBehaviour, IVirtualButtonEventHandler
     {
         if(!horizontalDone)
         {
-            HintText.text = "2. Cut the onion horizontally as shown below. (Do not cut the strunk!)";
+            HintText.text = "2. Cut the onion horizontally as shown below. Do not cut until the end!";
             foreach (Animator anim in hanimators)
             {
                 yield return new WaitForSeconds(1);
