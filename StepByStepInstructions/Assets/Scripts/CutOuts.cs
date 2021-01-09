@@ -31,5 +31,8 @@ public class CutOuts : MonoBehaviour
             yield return new WaitForSeconds(1);
             anim.Play("cutouts");
         }
+
+        yield return new WaitForSeconds(5);
+        PlacingArea.SetActive(false);
     }
 }

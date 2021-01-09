@@ -88,9 +88,10 @@ public class UIInteractables : MonoBehaviour
 
         } else if (UpdateUI && StepEnumerator.Current == null)
         {
-            HeaderField.text = "DONE! Enjoy your meal";
             UpdateUI = false;
             NextStepButton.interactable = false;
+            TimerSet = false;
+            Timer.SetActive(false);
         }
 
         if(TimerSet)
